@@ -1,13 +1,17 @@
 import { jsPDF } from 'jspdf';
 
-const loadImage = url => new Promise((resolve, reject) => {
-  const image = new Image();
-  image.onload = () => resolve(image);
-  image.onerror = reject;
-  image.src = url;
-});
+const loadImage = url =>
+  new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = url;
+  });
 
-export async function renderArtboard(svgElement, { scale = 2, transparent = false, format = 'png' } = {}) {
+export async function renderArtboard(
+  svgElement,
+  { scale = 2, transparent = false, format = 'png' } = {},
+) {
   const clone = svgElement.cloneNode(true);
   clone.querySelectorAll('.selection-layer, .safe-area').forEach(node => node.remove());
   if (transparent) clone.querySelectorAll('.canvas-bg').forEach(node => node.remove());
@@ -47,9 +51,14 @@ function downloadBlob(blob, filename) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-const canvasBlob = (canvas, type, quality = .95) => new Promise((resolve, reject) => {
-  canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('图片编码失败')), type, quality);
-});
+const canvasBlob = (canvas, type, quality = 0.95) =>
+  new Promise((resolve, reject) => {
+    canvas.toBlob(
+      blob => (blob ? resolve(blob) : reject(new Error('图片编码失败'))),
+      type,
+      quality,
+    );
+  });
 
 export async function exportArtboard(svgElement, options) {
   const { format = 'png', scale = 2, transparent = false, name = 'BE5Tmate-card' } = options;
@@ -57,8 +66,13 @@ export async function exportArtboard(svgElement, options) {
   const canvas = await renderArtboard(svgElement, { scale, transparent, format: normalized });
   const safeName = name.replace(/[\\/:*?"<>|]/g, '-');
   if (normalized === 'pdf') {
-    const pdf = new jsPDF({ orientation: canvas.width > canvas.height ? 'landscape' : 'portrait', unit: 'px', format: [canvas.width, canvas.height], hotfixes: ['px_scaling'] });
-    pdf.addImage(canvas.toDataURL('image/jpeg', .96), 'JPEG', 0, 0, canvas.width, canvas.height);
+    const pdf = new jsPDF({
+      orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+      unit: 'px',
+      format: [canvas.width, canvas.height],
+      hotfixes: ['px_scaling'],
+    });
+    pdf.addImage(canvas.toDataURL('image/jpeg', 0.96), 'JPEG', 0, 0, canvas.width, canvas.height);
     pdf.save(`${safeName}.pdf`);
     return;
   }
@@ -68,5 +82,7 @@ export async function exportArtboard(svgElement, options) {
 }
 
 export function makeThumbnail(svgElement) {
-  return renderArtboard(svgElement, { scale: .22 }).then(canvas => canvas.toDataURL('image/jpeg', .72));
+  return renderArtboard(svgElement, { scale: 0.22 }).then(canvas =>
+    canvas.toDataURL('image/jpeg', 0.72),
+  );
 }

@@ -136,7 +136,7 @@ npm run preview
 - **画布**：整个卡片是一棵 SVG 元素树，图层即 props，编辑即刻反映到 DOM
 - **导出**：序列化 SVG → `Image` → `Canvas` → `toBlob`；PDF 由 jsPDF 承载
 - **状态**：单一 `project` 对象 + 不可变更新，配合历史栈实现撤销重做
-- **字体**：系统无衬线栈（Inter / Helvetica / PingFang SC / Noto Sans SC），不引入需授权字体
+- **字体**：标题 Space Grotesk、正文 DM Sans（通过 Google Fonts 加载，均为 SIL OFL 开源授权），中文回退 PingFang SC / Microsoft YaHei / Noto Sans SC
 
 ```bash
 npm run build   # 产物在 dist/
