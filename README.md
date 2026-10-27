@@ -5,7 +5,7 @@
 ![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![No Backend](https://img.shields.io/badge/Backend-none-2ea44f)
-![License](https://img.shields.io/badge/License-not%20specified-lightgrey)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ![BE5Tmate 工作台](docs/preview-main.png)
 
@@ -163,4 +163,12 @@ npm run build   # 产物在 dist/
 
 ## 许可证
 
-本仓库暂未附带开源许可证。如需开源或商用，请先补充 `LICENSE` 文件（MIT / Apache-2.0 等）并确认所用字体与素材的授权范围。
+本项目基于 [MIT License](LICENSE) 开源，Copyright (c) 2026 BE5Tmate。
+
+你可以自由使用、修改、分发甚至商用，**唯一要求是保留版权声明与许可声明**。软件按「现状」提供，不附带任何担保。
+
+几点需要自行确认的边界：
+
+- **依赖与字体**：React、Vite、jsPDF、lucide-react 各自遵循其开源协议；字体 DM Sans 与 Space Grotesk 为 SIL Open Font License，可商用。
+- **素材**：`src/data.js` 里的运动员形象是项目自带的原创矢量插画，可随项目一起使用；但**你自己上传的球员照片、球队标识、赛事素材**的版权由你负责，MIT 许可不覆盖这部分。
+- **商标**：MIT 不授予任何商标使用权，「BE5Tmate」名称与落款标识仅用于标识本项目来源。
