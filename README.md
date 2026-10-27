@@ -6,6 +6,11 @@
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![No Backend](https://img.shields.io/badge/Backend-none-2ea44f)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
+![Deploy](https://github.com/BE5Tmate/be5tmate-studio/actions/workflows/deploy.yml/badge.svg)
+
+### 🔗 [在线演示 · be5tmate.github.io/be5tmate-studio](https://be5tmate.github.io/be5tmate-studio/)
+
+在线版即仓库 `main` 分支的最新构建，推送到 `main` 会自动重新发布。无需安装、无需后端，打开即可编辑与导出。
 
 ![BE5Tmate 工作台](docs/preview-main.png)
 
@@ -80,7 +85,7 @@ npm run preview
 ```
 
 > 若没有 `package-lock.json` 或想升级依赖，把 `npm ci` 换成 `npm install`。
-> 构建产物使用绝对路径 `/assets/...`，请通过本地服务或部署访问，直接用 `file://` 双击 `dist/index.html` 会白屏。
+> 构建产物使用相对路径，可直接托管在任何目录；但不能用 `file://` 双击 `dist/index.html` 打开——浏览器的模块加载策略会拦截，请用 `npm run preview`、本地静态服务或部署后的地址访问。
 
 ---
 
@@ -148,7 +153,19 @@ npm run build   # 产物在 dist/
 
 ### 部署
 
-`dist/` 是纯静态站点，可直接放到任意静态托管（Vercel、Netlify、Cloudflare Pages、GitHub Pages、对象存储）。若部署在子路径（如 `https://user.github.io/repo/`），需要在 `vite.config.js` 中设置 `base: '/repo/'` 后重新构建。
+`dist/` 是纯静态站点，可直接放到任意静态托管（Vercel、Netlify、Cloudflare Pages、GitHub Pages、对象存储）。
+
+#### GitHub Pages（已配置，开箱即用）
+
+仓库自带 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)：推送到 `main` 或手动触发 `workflow_dispatch`，会自动 `npm ci` → `npm run build` → 发布到 Pages。
+
+- 线上地址：https://be5tmate.github.io/be5tmate-studio/
+- 首次部署需在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**
+- 构建使用 `base: './'`（见 `vite.config.js`），因此项目站点挂在 `/be5tmate-studio/` 子路径下也能正确加载资源
+
+#### 其他平台
+
+任意静态托管只要把 `dist/` 上传即可。若平台要求强制子路径且不遵循相对路径，可在 `vite.config.js` 中把 `base` 改成 `'/你的子路径/'` 后重新构建。
 
 ---
 
